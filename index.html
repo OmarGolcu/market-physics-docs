@@ -740,7 +740,8 @@ decaying, and how much mass is behind it.</p>
 ) <span class="c">-&gt;</span> <span class="s">IndicatorResult</span></code></pre>
 <div class="phys"><p>Damping Ratio borrows the language of damped oscillators, where damping describes how quickly oscillation amplitude decays relative to a reference. Mapping price to position, it compares the short-horizon amplitude of returns against the long-horizon amplitude:</p>
 <p>* <code>short_amp</code> -&gt; rolling standard deviation of returns over <code>short_window</code>, * <code>long_amp</code>  -&gt; rolling standard deviation of returns over <code>window</code>, * <code>ratio</code>     -&gt; <code>short_amp / long_amp</code>.</p>
-<p>Values below <code>1</code> describe short-term amplitude that is small relative to the longer horizon (recent oscillation is damped); values above <code>1</code> describe short-term amplitude that exceeds the longer horizon (recent oscillation is amplified). This is a descriptive amplitude ratio only — it is not a trading signal and carries no directional recommendation.</p></div>
+<p>Values below <code>1</code> describe short-term amplitude that is small relative to the longer horizon (recent oscillation is damped); values above <code>1</code> describe short-term amplitude that exceeds the longer horizon (recent oscillation is amplified). This is a descriptive amplitude ratio only — it is not a trading signal and carries no directional recommendation.</p>
+<p>Equivalent to <code>turbulence.volatility_cascade(mode='ratio')</code> at matched parameters; exposed here as a classical-mechanics damping/amplification ratio.</p></div>
 <p class="formula"><span class="k">core quantity</span> <span class="eq">std(returns, short_window) / std(returns, window)</span></p>
 <h5>Parameters</h5>
 <div class="tbl"><table>
@@ -765,7 +766,7 @@ result.values.first_valid_index()  <span class="c"># 100 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Descriptive amplitude ratio: values below 1 describe short-term amplitude that is small relative to the longer horizon (recent oscillation damped) and values above 1 describe short-term amplitude that exceeds it (recent oscillation amplified). Descriptive only — not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Descriptive amplitude ratio: values below 1 describe short-term amplitude that is small relative to the longer horizon (recent oscillation damped) and values above 1 describe short-term amplitude that exceeds it (recent oscillation amplified). Descriptive only — not a signal.</p><p class="caption lim"><b>Related</b> — Equivalent to turbulence.volatility_cascade(mode='ratio') at matched parameters; exposed here as a classical-mechanics damping/amplification ratio.</p><p class="caption lim"><b>Limitation</b> — Descriptive amplitude-ratio analogy; a non-negative, unbounded ratio (not in [0, 1]). The long-horizon volatility denominator is float-drift-guarded (masked to NaN on near-constant returns). Not physical mechanics, not a prediction, and not a trading signal.</p>
 </article>
 <article class="indicator" id="dynamics-impulse_energy">
 <h4><a href="#dynamics-impulse_energy">impulse_energy</a></h4>
@@ -805,7 +806,7 @@ result.values.first_valid_index()  <span class="c"># 50 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Unsigned descriptive impulse: higher values describe sudden, volume-backed shocks (a move that is large relative to its own recent volatility, backed by above-average participation) and values near zero describe calm, low-participation movement. Descriptive only — not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Unsigned descriptive impulse: higher values describe sudden, volume-backed shocks (a move that is large relative to its own recent volatility, backed by above-average participation) and values near zero describe calm, low-participation movement. Descriptive only — not a signal.</p><p class="caption lim"><b>Limitation</b> — Descriptive mechanics analogy (standardized shock times participation); unbounded and heavy-tailed. The volatility denominator is float-drift-guarded (masked to NaN on near-constant returns). Not physical mechanics, not a prediction, and not a trading signal.</p>
 </article>
 <article class="indicator" id="dynamics-market_acceleration">
 <h4><a href="#dynamics-market_acceleration">market_acceleration</a></h4>
@@ -824,7 +825,7 @@ result.values.first_valid_index()  <span class="c"># 50 — NaN during warm-up</
 <h5>Parameters</h5>
 <div class="tbl"><table>
 <thead><tr><th>name</th><th>type</th><th>default</th><th>description</th></tr></thead>
-<tbody><tr><td><code>df</code></td><td><code>pd.DataFrame</code></td><td>—</td><td>OHLCV dataframe. Only the <code>close</code> column is required.</td></tr><tr><td><code>window</code></td><td><code>int</code></td><td><code>1</code></td><td>Rolling window for smoothing (<code>&gt;= 1</code>); ignored unless <code>smooth</code> is True.</td></tr><tr><td><code>return_method</code> <span class="kw">kw-only</span></td><td><code>Literal['pct', 'log']</code></td><td><code>'pct'</code></td><td>How to compute returns. <code>"pct"</code> uses percentage change; <code>"log"</code> uses log returns.</td></tr><tr><td><code>smooth</code> <span class="kw">kw-only</span></td><td><code>bool</code></td><td><code>False</code></td><td>If True, average the acceleration over <code>window</code> observations.</td></tr></tbody></table></div>
+<tbody><tr><td><code>df</code></td><td><code>pd.DataFrame</code></td><td>—</td><td>OHLCV dataframe. Only the <code>close</code> column is required.</td></tr><tr><td><code>window</code></td><td><code>int</code></td><td><code>1</code></td><td>Rolling window for smoothing (<code>&gt;= 1</code>). It only affects the output when <code>smooth=True</code>; otherwise it is retained for API consistency and validation and does not change the values.</td></tr><tr><td><code>return_method</code> <span class="kw">kw-only</span></td><td><code>Literal['pct', 'log']</code></td><td><code>'pct'</code></td><td>How to compute returns. <code>"pct"</code> uses percentage change; <code>"log"</code> uses log returns.</td></tr><tr><td><code>smooth</code> <span class="kw">kw-only</span></td><td><code>bool</code></td><td><code>False</code></td><td>If True, average the acceleration over <code>window</code> observations.</td></tr></tbody></table></div>
 <h5>Returns</h5>
 <p class="returns">An IndicatorResult aligned to <code>df</code> index, with <code>NaN</code> during the warm-up period.</p>
 <h5>Raises</h5><div class="tbl"><table><tbody><tr><td><code>ValueError</code></td><td>If <code>window</code> is less than 1 or <code>return_method</code> is invalid.</td></tr><tr><td><code>MissingColumnError</code></td><td>If the <code>close</code> column is missing.</td></tr><tr><td><code>InsufficientDataError</code></td><td>If <code>df</code> has fewer rows than needed for one defined output (<code>3</code> when not smoothing, <code>window + 2</code> when smoothing).</td></tr></tbody></table></div>
@@ -844,7 +845,7 @@ result.values.first_valid_index()  <span class="c"># 2 — NaN during warm-up</s
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Positive acceleration describes velocity increasing and negative describes velocity decreasing; the magnitude describes how quickly velocity is changing. Descriptive only — not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Positive acceleration describes velocity increasing and negative describes velocity decreasing; the magnitude describes how quickly velocity is changing. Descriptive only — not a signal.</p><p class="caption lim"><b>Window note</b> — window only affects the output when smooth=True; otherwise it is retained for API consistency and validation.</p><p class="caption lim"><b>Limitation</b> — Descriptive second-order rate-of-change analogy (the return difference); signed and unbounded. Not physical acceleration, not a prediction, and not a trading signal.</p>
 </article>
 <article class="indicator" id="dynamics-market_force">
 <h4><a href="#dynamics-market_force">market_force</a></h4>
@@ -884,7 +885,7 @@ result.values.first_valid_index()  <span class="c"># 19 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Signed descriptive force: positive values describe volume-backed acceleration in the positive direction and negative values describe the opposite. Descriptive only — not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Signed descriptive force: positive values describe volume-backed acceleration in the positive direction and negative values describe the opposite. Descriptive only — not a signal.</p><p class="caption lim"><b>Limitation</b> — Descriptive mechanics analogy (signed m*a); unbounded and scaled by the arbitrary scale factor. Not physical force, not a prediction, and not a trading signal.</p>
 </article>
 <article class="indicator" id="dynamics-market_friction">
 <h4><a href="#dynamics-market_friction">market_friction</a></h4>
@@ -899,7 +900,8 @@ result.values.first_valid_index()  <span class="c"># 19 — NaN during warm-up</
 <div class="phys"><p>Market Friction borrows the idea of a path that dissipates energy through resistance. Mapping price to position, it compares the total distance travelled by the return path against the net displacement over the same window:</p>
 <p>* <code>path_length</code>      -&gt; sum of absolute returns (total ground covered), * <code>net_displacement</code> -&gt; absolute sum of returns (straight-line progress), * <code>friction</code>         -&gt; <code>1 - net_displacement / path_length</code>.</p>
 <p>The value lives in <code>[0, 1]</code>. Near <code>0</code> describes efficient, directional movement (the path is nearly a straight line and almost all motion translates into net displacement). Near <code>1</code> describes noisy movement with little net displacement (the path wanders and cancels out, like motion lost to friction).</p>
-<p>This is a descriptive feature only — it is not a trading signal and carries no directional recommendation.</p></div>
+<p>This is a descriptive feature only — it is not a trading signal and carries no directional recommendation.</p>
+<p>Equivalent to <code>turbulence.market_viscosity(volume_weighted=False)</code> at matched parameters; related to returns-path roughness / geodesic-dissipation style measures.</p></div>
 <p class="formula"><span class="k">core quantity</span> <span class="eq">1 - abs(sum(returns, window)) / sum(abs(returns), window)</span></p>
 <h5>Parameters</h5>
 <div class="tbl"><table>
@@ -924,7 +926,7 @@ result.values.first_valid_index()  <span class="c"># 50 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Descriptive path-efficiency measure in [0, 1]: near 0 describes efficient, directional movement (net displacement close to the path length) and near 1 describes noisy movement with little net displacement. Descriptive only — not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Descriptive path-efficiency measure in [0, 1]: near 0 describes efficient, directional movement (net displacement close to the path length) and near 1 describes noisy movement with little net displacement. Descriptive only — not a signal.</p><p class="caption lim"><b>Related</b> — Equivalent to turbulence.market_viscosity(volume_weighted=False) at matched parameters; related to returns-path roughness / geodesic-dissipation style measures.</p><p class="caption lim"><b>Limitation</b> — Descriptive path-efficiency analogy bounded in [0, 1]; NaN over a flat (zero path length) window. Not physical friction, not a prediction, and not a trading signal.</p>
 </article>
 <article class="indicator" id="dynamics-market_momentum">
 <h4><a href="#dynamics-market_momentum">market_momentum</a></h4>
@@ -939,7 +941,8 @@ result.values.first_valid_index()  <span class="c"># 50 — NaN during warm-up</
 ) <span class="c">-&gt;</span> <span class="s">IndicatorResult</span></code></pre>
 <div class="phys"><p>Market Momentum is the classical-mechanics analogue of momentum <code>p = m * v</code> — mass times velocity. Market mapping:</p>
 <p>* <code>v</code> (velocity) -&gt; close-price return, * <code>m</code> (mass)     -&gt; normalised volume (current volume relative to its   rolling mean), * <code>p</code> (momentum) -&gt; <code>normalized_volume * return * scale</code>.</p>
-<p>Unlike :func:`market_physics.energy.momentum_energy` (which squares the return and is therefore unsigned), this momentum is **signed**: positive values describe volume-backed upward motion and negative values describe volume-backed downward motion. It is a descriptive feature only — not the same quantity as momentum energy, and not a trading signal.</p></div>
+<p>Unlike :func:`market_physics.energy.momentum_energy` (which squares the return and is therefore unsigned), this momentum is **signed**: positive values describe volume-backed upward motion and negative values describe volume-backed downward motion. It is a descriptive feature only — not the same quantity as momentum energy, and not a trading signal.</p>
+<p>At matched parameters with <code>scale=1</code>, equals <code>work_done_by_volume(cumulative=False)</code>; momentum is exposed as the signed <code>m * v</code> framing.</p></div>
 <p class="formula"><span class="k">core quantity</span> <span class="eq">normalized_volume * returns * scale</span></p>
 <h5>Parameters</h5>
 <div class="tbl"><table>
@@ -964,7 +967,7 @@ result.values.first_valid_index()  <span class="c"># 19 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Signed descriptive momentum: positive values describe volume-backed upward motion and negative values describe volume-backed downward motion. Distinct from momentum_energy (which is unsigned). Descriptive only — not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Signed descriptive momentum: positive values describe volume-backed upward motion and negative values describe volume-backed downward motion. Distinct from momentum_energy (which is unsigned). Descriptive only — not a signal.</p><p class="caption lim"><b>Related</b> — At matched parameters with scale=1, equals work_done_by_volume(cumulative=False); momentum is exposed as the signed m*v framing.</p><p class="caption lim"><b>Limitation</b> — Descriptive mechanics analogy (signed m*v); unbounded and scaled by the arbitrary scale factor. Not physical momentum, not a prediction, and not a trading signal.</p>
 </article>
 <article class="indicator" id="dynamics-market_potential_energy">
 <h4><a href="#dynamics-market_potential_energy">market_potential_energy</a></h4>
@@ -979,7 +982,8 @@ result.values.first_valid_index()  <span class="c"># 19 — NaN during warm-up</
 ) <span class="c">-&gt;</span> <span class="s">IndicatorResult</span></code></pre>
 <div class="phys"><p>Market Potential Energy borrows the idea of the potential energy stored in a displacement from equilibrium (as in a spring, <code>U = 0.5 * k * x^2</code>). Mapping price to position, the equilibrium is a rolling centre of price and the displacement is how far the current close sits from that centre:</p>
 <p>* <code>center</code>       -&gt; a rolling equilibrium price (<code>"sma"</code> rolling mean or   <code>"vwap"</code> volume-weighted average price), * <code>displacement</code> -&gt; <code>close - center</code>, * <code>potential</code>    -&gt; <code>displacement ** 2</code> (optionally divided by   <code>center ** 2</code> when <code>normalize</code>).</p>
-<p>Market Potential Energy is **unsigned**: it grows with the squared distance from equilibrium regardless of which side of the centre price sits on. It describes how stretched price is relative to its rolling centre; it is explicitly **not** a mean-reversion signal and implies no expectation that price will return to the centre. This is a descriptive feature only — it is not a trading signal and carries no directional recommendation.</p></div>
+<p>Market Potential Energy is **unsigned**: it grows with the squared distance from equilibrium regardless of which side of the centre price sits on. It describes how stretched price is relative to its rolling centre; it is explicitly **not** a mean-reversion signal and implies no expectation that price will return to the centre. This is a descriptive feature only — it is not a trading signal and carries no directional recommendation.</p>
+<p>Closely related to <code>gravity.field_potential(center='center_of_mass')</code> at matched parameters; <code>market_potential_energy</code> uses a rolling VWAP-style equilibrium, while <code>field_potential</code> uses a binned volume-profile center.</p></div>
 <p class="formula"><span class="k">core quantity</span> <span class="eq">(close - center) ** 2 / center ** 2</span></p>
 <h5>Parameters</h5>
 <div class="tbl"><table>
@@ -1004,7 +1008,7 @@ result.values.first_valid_index()  <span class="c"># 99 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Unsigned descriptive measure of how far price is displaced from its rolling equilibrium centre: larger values describe price that is more stretched from the centre, regardless of side. Not a mean-reversion signal — it implies no expectation that price will return to the centre. Descriptive only — not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Unsigned descriptive measure of how far price is displaced from its rolling equilibrium centre: larger values describe price that is more stretched from the centre, regardless of side. Not a mean-reversion signal — it implies no expectation that price will return to the centre. Descriptive only — not a signal.</p><p class="caption lim"><b>Related</b> — Closely related to gravity.field_potential(center='center_of_mass') at matched parameters; market_potential_energy uses a rolling VWAP-style equilibrium, while field_potential uses a binned volume-profile center.</p><p class="caption lim"><b>Limitation</b> — Descriptive displacement-energy analogy; non-negative and unbounded (the normalised form is scale-free but not necessarily bounded). Explicitly not a mean-reversion signal, not physical potential energy, not a prediction, and not a trading signal.</p>
 </article>
 <article class="indicator" id="dynamics-market_velocity">
 <h4><a href="#dynamics-market_velocity">market_velocity</a></h4>
@@ -1023,7 +1027,7 @@ result.values.first_valid_index()  <span class="c"># 99 — NaN during warm-up</
 <h5>Parameters</h5>
 <div class="tbl"><table>
 <thead><tr><th>name</th><th>type</th><th>default</th><th>description</th></tr></thead>
-<tbody><tr><td><code>df</code></td><td><code>pd.DataFrame</code></td><td>—</td><td>OHLCV dataframe. Only the <code>close</code> column is required.</td></tr><tr><td><code>window</code></td><td><code>int</code></td><td><code>1</code></td><td>Rolling window for smoothing (<code>&gt;= 1</code>); ignored unless <code>smooth</code> is True.</td></tr><tr><td><code>return_method</code> <span class="kw">kw-only</span></td><td><code>Literal['pct', 'log']</code></td><td><code>'pct'</code></td><td>How to compute returns. <code>"pct"</code> uses percentage change; <code>"log"</code> uses log returns.</td></tr><tr><td><code>smooth</code> <span class="kw">kw-only</span></td><td><code>bool</code></td><td><code>False</code></td><td>If True, average the velocity over <code>window</code> observations.</td></tr></tbody></table></div>
+<tbody><tr><td><code>df</code></td><td><code>pd.DataFrame</code></td><td>—</td><td>OHLCV dataframe. Only the <code>close</code> column is required.</td></tr><tr><td><code>window</code></td><td><code>int</code></td><td><code>1</code></td><td>Rolling window for smoothing (<code>&gt;= 1</code>). It only affects the output when <code>smooth=True</code>; otherwise it is retained for API consistency and validation and does not change the values.</td></tr><tr><td><code>return_method</code> <span class="kw">kw-only</span></td><td><code>Literal['pct', 'log']</code></td><td><code>'pct'</code></td><td>How to compute returns. <code>"pct"</code> uses percentage change; <code>"log"</code> uses log returns.</td></tr><tr><td><code>smooth</code> <span class="kw">kw-only</span></td><td><code>bool</code></td><td><code>False</code></td><td>If True, average the velocity over <code>window</code> observations.</td></tr></tbody></table></div>
 <h5>Returns</h5>
 <p class="returns">An IndicatorResult aligned to <code>df</code> index, with <code>NaN</code> during the warm-up period.</p>
 <h5>Raises</h5><div class="tbl"><table><tbody><tr><td><code>ValueError</code></td><td>If <code>window</code> is less than 1 or <code>return_method</code> is invalid.</td></tr><tr><td><code>MissingColumnError</code></td><td>If the <code>close</code> column is missing.</td></tr><tr><td><code>InsufficientDataError</code></td><td>If <code>df</code> has fewer rows than needed for one defined output (<code>2</code> when not smoothing, <code>window + 1</code> when smoothing).</td></tr></tbody></table></div>
@@ -1043,7 +1047,7 @@ result.values.first_valid_index()  <span class="c"># 1 — NaN during warm-up</s
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Positive velocity describes upward price velocity over the period and negative velocity describes downward; the magnitude describes how fast price is moving. Descriptive only — not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Positive velocity describes upward price velocity over the period and negative velocity describes downward; the magnitude describes how fast price is moving. Descriptive only — not a signal.</p><p class="caption lim"><b>Window note</b> — window only affects the output when smooth=True; otherwise it is retained for API consistency and validation.</p><p class="caption lim"><b>Limitation</b> — Descriptive rate-of-change analogy (the return); signed and unbounded. Not physical velocity, not a prediction, and not a trading signal.</p>
 </article>
 <article class="indicator" id="dynamics-trend_inertia">
 <h4><a href="#dynamics-trend_inertia">trend_inertia</a></h4>
@@ -1083,7 +1087,7 @@ result.values.first_valid_index()  <span class="c"># 98 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Descriptive measure of volume-amplified directional persistence: higher magnitudes describe a persistent directional regime backed by above-average volume and near-zero values describe choppy, unstable direction. Normalized volume acts as a mass/amplifier, so values may exceed 1.0 and are not clipped. Descriptive only — not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Descriptive measure of volume-amplified directional persistence: higher magnitudes describe a persistent directional regime backed by above-average volume and near-zero values describe choppy, unstable direction. Normalized volume acts as a mass/amplifier, so values may exceed 1.0 and are not clipped. Descriptive only — not a signal.</p><p class="caption lim"><b>Limitation</b> — Descriptive directional-persistence analogy. Unweighted it is bounded in [0, 1]; volume-weighted it may exceed 1.0 and is intentionally left unclipped (normalized volume amplifies persistent direction). Not physical inertia, not a prediction, and not a trading signal.</p>
 </article>
 <article class="indicator" id="dynamics-work_done_by_volume">
 <h4><a href="#dynamics-work_done_by_volume">work_done_by_volume</a></h4>
@@ -1098,7 +1102,8 @@ result.values.first_valid_index()  <span class="c"># 98 — NaN during warm-up</
 ) <span class="c">-&gt;</span> <span class="s">IndicatorResult</span></code></pre>
 <div class="phys"><p>Work Done by Volume borrows the mechanics definition of work — force applied over a displacement (<code>W = F * d</code>). Mapping price to position, the displacement is the return and the force is proxied by the participating mass (normalised volume):</p>
 <p>* <code>mass</code>      -&gt; normalised volume (current volume relative to its rolling   mean), * <code>work_step</code> -&gt; <code>mass * returns</code> (signed per-bar work), * <code>work</code>      -&gt; the per-bar work, or its rolling sum when <code>cumulative</code>.</p>
-<p>Work is **signed**: positive values describe volume-backed work in the positive direction and negative values describe volume-backed work in the negative direction; the rolling sum accumulates and can partially cancel. This is a descriptive feature only — it is not a trading signal and carries no directional recommendation.</p></div>
+<p>Work is **signed**: positive values describe volume-backed work in the positive direction and negative values describe volume-backed work in the negative direction; the rolling sum accumulates and can partially cancel. This is a descriptive feature only — it is not a trading signal and carries no directional recommendation.</p>
+<p>When <code>cumulative=False</code> and parameters are matched, equals <code>market_momentum(scale=1)</code>; <code>cumulative=True</code> is the rolling sum of the same work/momentum step.</p></div>
 <p class="formula"><span class="k">core quantity</span> <span class="eq">rolling_sum(normalized_volume * returns, window)</span></p>
 <h5>Parameters</h5>
 <div class="tbl"><table>
@@ -1123,7 +1128,7 @@ result.values.first_valid_index()  <span class="c"># 98 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Signed descriptive work: positive values describe volume-backed work in the positive direction and negative values describe volume-backed work in the negative direction; the rolling sum accumulates and can partially cancel. Descriptive only — not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Signed descriptive work: positive values describe volume-backed work in the positive direction and negative values describe volume-backed work in the negative direction; the rolling sum accumulates and can partially cancel. Descriptive only — not a signal.</p><p class="caption lim"><b>Related</b> — When cumulative=False and parameters are matched, equals market_momentum(scale=1); cumulative=True is the rolling sum of the same work/momentum step.</p><p class="caption lim"><b>Limitation</b> — Descriptive mechanics analogy (signed volume-weighted work); unbounded and the cumulative sum can partially cancel. Not physical work, not a prediction, and not a trading signal.</p>
 </article>
 </section><section class="chapter" id="gravity">
 <div class="ch-head">
@@ -1203,7 +1208,7 @@ result.values.first_valid_index()  <span class="c"># 200 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — positive means the field is becoming more positive (upward-pull-dominant vs the previous bar), negative means more negative (downward-pull-dominant), near zero is stable</p>
+</svg><p class="caption"><b>Reading it</b> — positive means the field is becoming more positive (upward-pull-dominant vs the previous bar), negative means more negative (downward-pull-dominant), near zero is stable</p><p class="caption lim"><b>Limitation</b> — Descriptive first difference of the net gravitational field only. It is NaN wherever the underlying field is NaN — including invalid/no-profile windows (e.g. zero volume, no usable profile) and the bar after one. Not a trading signal, not a support/resistance prediction, not a physical gravity claim, and not a mean-reversion claim.</p>
 </article>
 <article class="indicator" id="gravity-field_potential">
 <h4><a href="#gravity-field_potential">field_potential</a></h4>
@@ -1223,6 +1228,7 @@ result.values.first_valid_index()  <span class="c"># 200 — NaN during warm-up<
 <p>optionally divided by <code>current_close ** 2</code> to give a simple, scale-free relative measure. The mass center is either the mass-weighted average of bin centers (<code>center="center_of_mass"</code>) or the center of the highest-mass bin (<code>center="dominant"</code>).</p>
 <p>For each rolling <code>lookback</code> window a volume profile is built over <code>price_bins</code> price levels (see <code>price_source</code>).</p>
 <p>This indicator is **descriptive only**. It measures how far price sits from a recent volume-mass equilibrium; it makes **no mean-reversion claim** and implies no expectation that price will move back toward the center.</p>
+<p>Closely related to <code>dynamics.market_potential_energy(equilibrium='vwap')</code> at matched parameters; <code>field_potential</code> uses a binned volume-profile center and current-close normalization, while <code>market_potential_energy</code> uses the rolling VWAP-style equilibrium.</p>
 <p>Interpretation:</p>
 <p>* higher -&gt; price is farther from the recent volume-mass equilibrium, * lower  -&gt; price is closer to the recent volume-mass equilibrium.</p></div>
 <p class="formula"><span class="k">core quantity</span> <span class="eq">(current_close - center_price) ** 2 / current_close ** 2</span></p>
@@ -1249,7 +1255,7 @@ result.values.first_valid_index()  <span class="c"># 199 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — higher means price is farther from the recent volume-mass equilibrium, lower means closer. Not a mean-reversion claim</p>
+</svg><p class="caption"><b>Reading it</b> — higher means price is farther from the recent volume-mass equilibrium, lower means closer. Not a mean-reversion claim</p><p class="caption lim"><b>Related</b> — Closely related to dynamics.market_potential_energy(equilibrium='vwap') at matched parameters; field_potential uses a binned volume-profile center and current-close normalization, while market_potential_energy uses the rolling VWAP-style equilibrium.</p><p class="caption lim"><b>Limitation</b> — Descriptive squared-displacement-from-volume-center measure only; no-usable-profile windows return NaN. Not a trading signal, not a support/resistance prediction, not a physical gravity claim, and not a mean-reversion claim.</p>
 </article>
 <article class="indicator" id="gravity-gravitational_balance">
 <h4><a href="#gravity-gravitational_balance">gravitational_balance</a></h4>
@@ -1384,7 +1390,7 @@ result.values.first_valid_index()  <span class="c"># 199 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — positive pulls upward, negative pulls downward, near zero is balanced</p>
+</svg><p class="caption"><b>Reading it</b> — positive pulls upward, negative pulls downward, near zero is balanced</p><p class="caption lim"><b>Limitation</b> — Descriptive inverse-square volume-profile field only. Invalid/no-profile windows (e.g. zero volume, no usable profile, or non-finite current price) return NaN. Not a trading signal, not a support/resistance prediction, not a physical gravity claim, and not a mean-reversion claim.</p>
 </article>
 <article class="indicator" id="gravity-mass_concentration_score">
 <h4><a href="#gravity-mass_concentration_score">mass_concentration_score</a></h4>
@@ -1477,7 +1483,7 @@ result.values.first_valid_index()  <span class="c"># 199 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — signed positive means price above the mass center, signed negative means below; magnitude is distance from the center. Not a mean-reversion claim</p>
+</svg><p class="caption"><b>Reading it</b> — signed positive means price above the mass center, signed negative means below; magnitude is distance from the center. Not a mean-reversion claim</p><p class="caption lim"><b>Limitation</b> — Descriptive displacement-from-volume-center measure only. No-usable-profile windows return NaN, and in normalized mode a non-positive current close is masked to NaN. Not a trading signal, not a support/resistance prediction, not a physical gravity claim, and not a mean-reversion claim.</p>
 </article>
 </section><section class="chapter" id="fields">
 <div class="ch-head">
@@ -1552,7 +1558,7 @@ result.values.first_valid_index()  <span class="c"># 98 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — In 'absolute' mode this is the unsigned local charge density (how much charge flows regardless of direction); in 'signed' mode it preserves polarity (net charge). Descriptive only.</p><p class="caption lim"><b>Limitation</b> — MVP local charge-density proxy based on signed volume participation.</p>
+</svg><p class="caption"><b>Reading it</b> — In 'absolute' mode this is the unsigned local charge density (how much charge flows regardless of direction); in 'signed' mode it preserves polarity (net charge). Descriptive only.</p><p class="caption lim"><b>Related</b> — In signed mode, normalize=False equals market_charge(normalize=False) at matched parameters; normalize=True is the rolling mean version of the same signed charge step.</p><p class="caption lim"><b>Limitation</b> — MVP local charge-density proxy based on signed volume participation.</p>
 </article>
 <article class="indicator" id="fields-electric_field_strength">
 <h4><a href="#fields-electric_field_strength">electric_field_strength</a></h4>
@@ -1671,7 +1677,7 @@ result.values.first_valid_index()  <span class="c"># 98 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate stronger persistent polarity-volume alignment; lower values indicate mixed or cancelling interaction. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — field-interaction-style proxy, not a physical electromagnetic field</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate stronger persistent polarity-volume alignment; lower values indicate mixed or cancelling interaction. Descriptive only.</p><p class="caption lim"><b>Related</b> — Normalized mode equals abs(volume_weighted polarity_index) at matched parameters; raw mode is a signed polarity-volume interaction closely related to volume_weighted polarity_index.</p><p class="caption lim"><b>Limitation</b> — field-interaction-style proxy, not a physical electromagnetic field</p>
 </article>
 <article class="indicator" id="fields-magnetic_flow">
 <h4><a href="#fields-magnetic_flow">magnetic_flow</a></h4>
@@ -1750,7 +1756,7 @@ result.values.first_valid_index()  <span class="c"># 98 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Positive values indicate a net positive (up-move) charge imbalance; negative values a net negative (down-move) imbalance; values near zero a balanced charge. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — electromagnetic charge-style proxy, not physical charge</p>
+</svg><p class="caption"><b>Reading it</b> — Positive values indicate a net positive (up-move) charge imbalance; negative values a net negative (down-move) imbalance; values near zero a balanced charge. Descriptive only.</p><p class="caption lim"><b>Related</b> — Equivalent to turbulence.market_flow(normalize=True) at matched parameters, but interpreted as signed charge imbalance.</p><p class="caption lim"><b>Limitation</b> — electromagnetic charge-style proxy, not physical charge</p>
 </article>
 <article class="indicator" id="fields-market_current">
 <h4><a href="#fields-market_current">market_current</a></h4>
@@ -1791,7 +1797,7 @@ result.values.first_valid_index()  <span class="c"># 147 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Positive values indicate the charge state is rising; negative values indicate it is falling; values near zero indicate a stable charge state. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — electromagnetic current-style proxy, not physical current</p>
+</svg><p class="caption"><b>Reading it</b> — Positive values indicate the charge state is rising; negative values indicate it is falling; values near zero indicate a stable charge state. Descriptive only.</p><p class="caption lim"><b>Related</b> — Equal to turbulence.flow_velocity when both are normalized at matched parameters; differs in unnormalized mode, where charge remains normalized before differencing.</p><p class="caption lim"><b>Limitation</b> — electromagnetic current-style proxy, not physical current</p>
 </article>
 <article class="indicator" id="fields-market_induction">
 <h4><a href="#fields-market_induction">market_induction</a></h4>
@@ -1947,7 +1953,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — higher means the dominant cycle accounts for more of the recent oscillation, lower means oscillation is spread across cycles</p>
+</svg><p class="caption"><b>Reading it</b> — higher means the dominant cycle accounts for more of the recent oscillation, lower means oscillation is spread across cycles</p><p class="caption lim"><b>Related</b> — Magnitude-share sibling of resonance_score; both use the same dominant spectral bin and typically correlate highly, while cycle_amplitude uses magnitude share and resonance_score uses power share.</p>
 </article>
 <article class="indicator" id="waves-dominant_cycle_period">
 <h4><a href="#waves-dominant_cycle_period">dominant_cycle_period</a></h4>
@@ -2165,7 +2171,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — higher means one allowed frequency explains a larger share of recent spectral power, lower means power is spread across frequencies</p>
+</svg><p class="caption"><b>Reading it</b> — higher means one allowed frequency explains a larger share of recent spectral power, lower means power is spread across frequencies</p><p class="caption lim"><b>Related</b> — Power-share sibling of cycle_amplitude; both use the same dominant spectral bin and typically correlate highly, while resonance_score uses power share and cycle_amplitude uses magnitude share.</p>
 </article>
 <article class="indicator" id="waves-spectral_entropy">
 <h4><a href="#waves-spectral_entropy">spectral_entropy</a></h4>
@@ -3115,7 +3121,7 @@ result.values.first_valid_index()  <span class="c"># 199 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate a more agitated regime across several volatility and participation observables at once; lower values indicate a calmer regime. Descriptive only — not directional and not predictive.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate a more agitated regime across several volatility and participation observables at once; lower values indicate a calmer regime. Descriptive only — not directional and not predictive.</p><p class="caption lim"><b>Limitation</b> — Unbounded composite of ratio components; heavy-tailed when the volatility denominators are small. The tail component's volatility denominator is float-drift-guarded (masked to NaN on near-constant returns), and (high - low) / close masks non-positive close. Descriptive agitation proxy only; not a prediction, classifier, or trading recommendation.</p>
 </article>
 <article class="indicator" id="statistical-market_heat">
 <h4><a href="#statistical-market_heat">market_heat</a></h4>
@@ -3156,7 +3162,7 @@ result.values.first_valid_index()  <span class="c"># 98 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate more accumulated price motion over the window (a hotter, more active regime); lower values indicate a quiet, low-motion regime. Descriptive only.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate more accumulated price motion over the window (a hotter, more active regime); lower values indicate a quiet, low-motion regime. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — Unbounded rolling accumulation of absolute motion; scale depends on window length and (when volume-weighted) participation. Descriptive accumulated-motion proxy only; not directional, not a prediction, and not a trading recommendation.</p>
 </article>
 <article class="indicator" id="statistical-market_heat_capacity">
 <h4><a href="#statistical-market_heat_capacity">market_heat_capacity</a></h4>
@@ -3197,7 +3203,7 @@ result.values.first_valid_index()  <span class="c"># 101 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — High values mean the market absorbs a lot of energy (volume-backed motion) while its temperature (volatility) changes little; low values mean small energy input accompanies large temperature swings. Descriptive only — not directional and not predictive.</p>
+</svg><p class="caption"><b>Reading it</b> — High values mean the market absorbs a lot of energy (volume-backed motion) while its temperature (volatility) changes little; low values mean small energy input accompanies large temperature swings. Descriptive only — not directional and not predictive.</p><p class="caption lim"><b>Limitation</b> — Unbounded and heavy-tailed: a small temperature change in the denominator can produce a very large capacity reading, so the distribution has a long right tail. The tiny-denominator float drift is guarded (masked to NaN below a matched return-magnitude scale). Descriptive proxy only; not physical heat capacity, not a prediction, and not a trading recommendation.</p>
 </article>
 <article class="indicator" id="statistical-market_temperature">
 <h4><a href="#statistical-market_temperature">market_temperature</a></h4>
@@ -3239,7 +3245,7 @@ result.values.first_valid_index()  <span class="c"># 99 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate a hotter, more agitated market regime (greater return dispersion and wider intrabar range); lower values indicate calmer conditions. Descriptive only.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate a hotter, more agitated market regime (greater return dispersion and wider intrabar range); lower values indicate calmer conditions. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — Descriptive volatility/range agitation proxy; unbounded (raw) or relative to its own recent mean (normalised). The intrabar range (high - low) / close masks non-positive close. Not physical temperature, not a prediction, and not a trading recommendation.</p>
 </article>
 <article class="indicator" id="statistical-phase_transition_score">
 <h4><a href="#statistical-phase_transition_score">phase_transition_score</a></h4>
@@ -3280,7 +3286,7 @@ result.values.first_valid_index()  <span class="c"># 100 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Values above 1.0 indicate the short-term regime is running hotter than its long-term baseline across volatility, range and volume; values below 1.0 indicate cooler. Descriptive only — not directional and not predictive.</p>
+</svg><p class="caption"><b>Reading it</b> — Values above 1.0 indicate the short-term regime is running hotter than its long-term baseline across volatility, range and volume; values below 1.0 indicate cooler. Descriptive only — not directional and not predictive.</p><p class="caption lim"><b>Limitation</b> — Ratio composite; unbounded above and sensitive to small long-window denominators. The volatility ratio's long-window denominator is float-drift-guarded (masked to NaN on near-constant returns), and (high - low) / close masks non-positive close. Descriptive regime-shift proxy only; not a prediction, classifier, or trading recommendation.</p>
 </article>
 <article class="indicator" id="statistical-return_distribution_pressure">
 <h4><a href="#statistical-return_distribution_pressure">return_distribution_pressure</a></h4>
@@ -3303,7 +3309,7 @@ result.values.first_valid_index()  <span class="c"># 100 — NaN during warm-up<
 <thead><tr><th>name</th><th>type</th><th>default</th><th>description</th></tr></thead>
 <tbody><tr><td><code>df</code></td><td><code>pd.DataFrame</code></td><td>—</td><td>OHLCV dataframe. Only the <code>close</code> column is required.</td></tr><tr><td><code>window</code></td><td><code>int</code></td><td><code>100</code></td><td>Number of observations in each rolling window (<code>&gt;= 2</code>).</td></tr><tr><td><code>bins</code> <span class="kw">kw-only</span></td><td><code>BinsSpec</code></td><td><code>'fd'</code></td><td>Histogram bin count (<code>int &gt;= 2</code>) or a numpy binning rule (<code>"fd"</code>, <code>"sqrt"</code> or <code>"sturges"</code>).</td></tr><tr><td><code>return_method</code> <span class="kw">kw-only</span></td><td><code>Literal['pct', 'log']</code></td><td><code>'pct'</code></td><td>How to compute returns. <code>"pct"</code> uses percentage change; <code>"log"</code> uses log returns.</td></tr><tr><td><code>normalize</code> <span class="kw">kw-only</span></td><td><code>bool</code></td><td><code>True</code></td><td>Retained for API consistency; base-2 JSD is already bounded in <code>[0, 1]</code> so no rescaling is applied.</td></tr></tbody></table></div>
 <h5>Returns</h5>
-<p class="returns">An IndicatorResult aligned to <code>df</code> index, with <code>NaN</code> during the warm-up period.</p>
+<p class="returns">An IndicatorResult aligned to <code>df</code> index, with <code>NaN</code> during the warm-up period and for degenerate windows (fewer than two finite returns, zero/non-finite standard deviation, or an empty histogram).</p>
 <h5>Raises</h5><div class="tbl"><table><tbody><tr><td><code>ValueError</code></td><td>If <code>window</code> is less than 2, <code>bins</code> is invalid, or <code>return_method</code> is invalid.</td></tr><tr><td><code>MissingColumnError</code></td><td>If the <code>close</code> column is missing.</td></tr><tr><td><code>InsufficientDataError</code></td><td>If <code>df</code> has fewer than <code>window + 1</code> rows (the minimum needed for one defined output).</td></tr></tbody></table></div>
 <h5>Example</h5>
 <pre><code><span class="c"># df: OHLCV dataframe (open, high, low, close, volume)</span>
@@ -3321,7 +3327,7 @@ result.values.first_valid_index()  <span class="c"># 100 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate the recent return distribution departs more strongly from a normal of the same mean and standard deviation (fat tails, skew, multi-modality); values near zero indicate a near-normal shape. Descriptive only.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate the recent return distribution departs more strongly from a normal of the same mean and standard deviation (fat tails, skew, multi-modality); values near zero indicate a near-normal shape. Descriptive only.</p><p class="caption lim"><b>Normalization note</b> — base-2 JSD is already bounded in [0, 1]; the retained normalize flag applies no rescaling.</p><p class="caption lim"><b>Limitation</b> — Histogram/JSD estimate sensitive to bin choice and window length; degenerate windows (fewer than two finite returns, zero/non-finite std, or empty histogram) return NaN rather than 0.0. Descriptive distribution-shape proxy only; not a prediction, classifier, or trading recommendation.</p>
 </article>
 <article class="indicator" id="statistical-tail_pressure">
 <h4><a href="#statistical-tail_pressure">tail_pressure</a></h4>
@@ -3363,7 +3369,7 @@ result.values.first_valid_index()  <span class="c"># 199 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate extreme returns are arriving more often than the rolling baseline tail rate; values near the baseline rate indicate normal tail behaviour. Descriptive only.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate extreme returns are arriving more often than the rolling baseline tail rate; values near the baseline rate indicate normal tail behaviour. On i.i.d. data the expected exceedance rate is near 1 - quantile (this is a rolling exceedance-rate proxy); clustered tails can lift local rates above that anchor. Descriptive only.</p><p class="caption lim"><b>Normalization note</b> — the exceedance rate is already bounded in [0, 1]; the retained normalize flag applies no rescaling.</p><p class="caption lim"><b>Limitation</b> — Rolling exceedance-rate proxy anchored near 1 - quantile on i.i.d. data; sensitive to window length and quantile choice and does not distinguish clustering from baseline noise. Descriptive only; not a VaR estimate, prediction, classifier, or trading recommendation.</p>
 </article>
 <article class="indicator" id="statistical-volatility_cluster_score">
 <h4><a href="#statistical-volatility_cluster_score">volatility_cluster_score</a></h4>
@@ -3404,7 +3410,7 @@ result.values.first_valid_index()  <span class="c"># 101 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Positive values indicate persistent (clustering) volatility — large moves tend to follow large moves; values near zero indicate little carryover of volatility shocks. Already bounded in [-1, 1]. Descriptive only.</p>
+</svg><p class="caption"><b>Reading it</b> — Positive values indicate persistent (clustering) volatility — large moves tend to follow large moves; values near zero indicate little carryover of volatility shocks. Already bounded in [-1, 1]. Descriptive only.</p><p class="caption lim"><b>Normalization note</b> — the correlation is already scaled to [-1, 1]; the retained normalize flag applies no rescaling.</p><p class="caption lim"><b>Limitation</b> — Rolling squared-return autocorrelation bounded in [-1, 1]; noisy for short windows and undefined (NaN) when a window's squared returns are constant. Descriptive volatility-persistence proxy only; not a prediction, classifier, or trading recommendation.</p>
 </article>
 </section><section class="chapter" id="entropy">
 <div class="ch-head">
@@ -5922,7 +5928,7 @@ result.values.first_valid_index()  <span class="c"># 49 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Positive values indicate the close is above its local baseline; negative values indicate it is below; values near zero indicate it is close to the baseline. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — descriptive feedback-error proxy, not a trading signal or control action</p>
+</svg><p class="caption"><b>Reading it</b> — Positive values indicate the close is above its local baseline; negative values indicate it is below; values near zero indicate it is close to the baseline. Descriptive only.</p><p class="caption lim"><b>Related</b> — With baseline='rolling_mean' and normalize=True, this equals stochastic.mean_reversion_pressure(source='price') at matched parameters; here it is interpreted as a set-point feedback error and also supports a rolling_median baseline.</p><p class="caption lim"><b>Limitation</b> — descriptive feedback-error proxy, not a trading signal or control action</p>
 </article>
 <article class="indicator" id="control-feedback_loop_intensity">
 <h4><a href="#control-feedback_loop_intensity">feedback_loop_intensity</a></h4>
@@ -6037,7 +6043,7 @@ result.values.first_valid_index()  <span class="c"># 99 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate a larger historical share of movement that reduced the prior error direction (corrective); lower values indicate less corrective movement. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — historical corrective movement share proxy; not system safety, trading safety, future stability, or a trading signal</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate a larger historical share of movement that reduced the prior error direction (corrective); lower values indicate less corrective movement. Descriptive only.</p><p class="caption lim"><b>Related</b> — At matched parameters, this equals (1 + correction_strength) / 2; it is exposed as a bounded corrective-movement share rather than signed correction strength.</p><p class="caption lim"><b>Limitation</b> — historical corrective movement share proxy; not system safety, trading safety, future stability, or a trading signal</p>
 </article>
 </section><section class="chapter" id="geometry">
 <div class="ch-head">
@@ -6156,7 +6162,7 @@ result.values.first_valid_index()  <span class="c"># 50 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate the path strayed further from the direct route (more wasted motion); values near 0 indicate a near-direct path. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — geometry-inspired geodesic-deviation proxy; not physical spacetime geodesics, not relativity, and not a trading signal or prediction</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate the path strayed further from the direct route (more wasted motion); values near 0 indicate a near-direct path. Descriptive only.</p><p class="caption lim"><b>Related</b> — Equivalent to 1 - path_efficiency when normalized, but interpreted as geodesic deviation.</p><p class="caption lim"><b>Limitation</b> — geometry-inspired geodesic-deviation proxy; not physical spacetime geodesics, not relativity, and not a trading signal or prediction</p>
 </article>
 <article class="indicator" id="geometry-geometry_stress">
 <h4><a href="#geometry-geometry_stress">geometry_stress</a></h4>
@@ -6273,7 +6279,7 @@ result.values.first_valid_index()  <span class="c"># 50 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Values near 1 indicate price travelled almost directly over the window; values near 0 indicate a lot of back-and-forth for little net progress. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — geometry-inspired path-efficiency proxy; not physical spacetime geometry, not relativity, and not a trading signal or prediction</p>
+</svg><p class="caption"><b>Reading it</b> — Values near 1 indicate price travelled almost directly over the window; values near 0 indicate a lot of back-and-forth for little net progress. Descriptive only.</p><p class="caption lim"><b>Related</b> — Equals 1 - fractals.roughness_index at a one-bar window offset when roughness_index is normalized (a points-vs-bars window convention); related to thermodynamics.thermal_efficiency as a price-path efficiency analogue.</p><p class="caption lim"><b>Limitation</b> — geometry-inspired path-efficiency proxy; not physical spacetime geometry, not relativity, and not a trading signal or prediction</p>
 </article>
 <article class="indicator" id="geometry-price_curvature">
 <h4><a href="#geometry-price_curvature">price_curvature</a></h4>
@@ -6431,7 +6437,7 @@ result.values.first_valid_index()  <span class="c"># 99 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate faster metaphorical market-time (elevated volatility relative to its recent norm); lower values indicate slower market-time. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — Metaphorical volatility-adjusted market-time proxy; not physical relativistic time dilation.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate faster metaphorical market-time (elevated volatility relative to its recent norm); lower values indicate slower market-time. Descriptive only.</p><p class="caption lim"><b>Related</b> — Raw mode equals stochastic.brownian_volatility(annualize=False) at matched parameters; normalized mode expresses that rolling volatility relative to its own rolling mean as a metaphorical market-time rate.</p><p class="caption lim"><b>Limitation</b> — Metaphorical volatility-adjusted market-time proxy; not physical relativistic time dilation.</p>
 </article>
 </section><section class="chapter" id="experimental">
 <div class="ch-head">
@@ -6512,7 +6518,7 @@ result.values.first_valid_index()  <span class="c"># 159 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate the dominant cycle stayed near the reference period more often within the smoothing window; lower values indicate it did not. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — Descriptive smoothed cycle-locking condition; not proof of resonance and not predictive. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate the dominant cycle stayed near the reference period more often within the smoothing window; lower values indicate it did not. Descriptive only.</p><p class="caption lim"><b>Related</b> — Thresholded and smoothed dominant-cycle-distance feature.</p><p class="caption lim"><b>Limitation</b> — Descriptive smoothed cycle-locking condition; not proof of resonance and not predictive. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
 </article>
 <article class="indicator" id="experimental-experimental_pressure">
 <h4><a href="#experimental-experimental_pressure">experimental_pressure</a></h4>
@@ -6710,7 +6716,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate the dominant cycle period is further from the reference period; values near 0 indicate it is close to the reference. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — Resonance-inspired cycle-distance proxy; not evidence of physical resonance. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate the dominant cycle period is further from the reference period; values near 0 indicate it is close to the reference. Descriptive only.</p><p class="caption lim"><b>Related</b> — Derived from a local dominant-cycle-period calculation similar in concept to waves.dominant_cycle_period, but expressed as distance from a chosen reference period.</p><p class="caption lim"><b>Limitation</b> — Resonance-inspired cycle-distance proxy; not evidence of physical resonance. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
 </article>
 <article class="indicator" id="experimental-state_superposition_score">
 <h4><a href="#experimental-state_superposition_score">state_superposition_score</a></h4>
@@ -6750,7 +6756,7 @@ result.values.first_valid_index()  <span class="c"># 98 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Values near 1 indicate a directionally mixed (ambiguous) window; values near 0 indicate a one-sided window. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — Directional-state ambiguity proxy; not a physical quantum superposition. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Values near 1 indicate a directionally mixed (ambiguous) window; values near 0 indicate a one-sided window. Descriptive only.</p><p class="caption lim"><b>Related</b> — Equals 1 - abs(microstructure.order_flow_pressure) at matched parameters when using the same return direction and participation weighting; exposed here as a directional-state ambiguity score.</p><p class="caption lim"><b>Limitation</b> — Directional-state ambiguity proxy; not a physical quantum superposition. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
 </article>
 <article class="indicator" id="experimental-transition_probability_proxy">
 <h4><a href="#experimental-transition_probability_proxy">transition_probability_proxy</a></h4>
@@ -6791,7 +6797,7 @@ result.values.first_valid_index()  <span class="c"># 51 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate the return state changed more often within the window; lower values indicate a more persistent state. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — State-transition frequency proxy; not a physical quantum transition probability. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate the return state changed more often within the window; lower values indicate a more persistent state. Descriptive only.</p><p class="caption lim"><b>Related</b> — sign mode equals turbulence.flow_vorticity(volume_weighted=False) at matched parameters on data without flat bars; denominator semantics differ on flat bars. threshold mode adds an explicit neutral state.</p><p class="caption lim"><b>Limitation</b> — State-transition frequency proxy; not a physical quantum transition probability. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
 </article>
 <article class="indicator" id="experimental-uncertainty_bandwidth">
 <h4><a href="#experimental-uncertainty_bandwidth">uncertainty_bandwidth</a></h4>
@@ -6830,7 +6836,7 @@ result.values.first_valid_index()  <span class="c"># 99 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption lim"><b>Limitation</b> — Experimental volatility-based uncertainty proxy; not quantum uncertainty or a predictive interval. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
+</svg><p class="caption lim"><b>Related</b> — Raw mode equals stochastic.brownian_volatility(annualize=False) at matched parameters; normalized mode is conceptually close to geometry.volatility_time_dilation.</p><p class="caption lim"><b>Limitation</b> — Experimental volatility-based uncertainty proxy; not quantum uncertainty or a predictive interval. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
 </article>
 </section><section class="chapter" id="microstructure">
 <div class="ch-head">
@@ -7138,7 +7144,7 @@ result.values.first_valid_index()  <span class="c"># 98 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Positive values indicate upward order-flow-style pressure; negative values indicate downward pressure; values near zero indicate a balanced proxy. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — OHLCV-only microstructure proxy; does not use order book, bid/ask, or tick-level trade data. It does not use trade classification or order-book events.</p>
+</svg><p class="caption"><b>Reading it</b> — Positive values indicate upward order-flow-style pressure; negative values indicate downward pressure; values near zero indicate a balanced proxy. Descriptive only.</p><p class="caption lim"><b>Related</b> — Closely related to volume_imbalance at matched direction semantics; this variant weights signed direction by normalized volume participation rather than raw volume and can be highly correlated.</p><p class="caption lim"><b>Limitation</b> — OHLCV-only microstructure proxy; does not use order book, bid/ask, or tick-level trade data. It does not use trade classification or order-book events.</p>
 </article>
 <article class="indicator" id="microstructure-spread_proxy">
 <h4><a href="#microstructure-spread_proxy">spread_proxy</a></h4>
@@ -7217,7 +7223,7 @@ result.values.first_valid_index()  <span class="c"># 49 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Positive values indicate volume concentrated in upward candles; negative values indicate volume concentrated in downward candles; values near zero indicate a balanced proxy. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — OHLCV-only microstructure proxy; does not use order book, bid/ask, or tick-level trade data. It does not classify trades as buyer- or seller-initiated.</p>
+</svg><p class="caption"><b>Reading it</b> — Positive values indicate volume concentrated in upward candles; negative values indicate volume concentrated in downward candles; values near zero indicate a balanced proxy. Descriptive only.</p><p class="caption lim"><b>Related</b> — Closely related to order_flow_pressure at matched direction semantics; volume_imbalance uses raw signed volume, while order_flow_pressure uses normalized volume participation and can be highly correlated.</p><p class="caption lim"><b>Limitation</b> — OHLCV-only microstructure proxy; does not use order book, bid/ask, or tick-level trade data. It does not classify trades as buyer- or seller-initiated.</p>
 </article>
 </section>
 
