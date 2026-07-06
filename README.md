@@ -8,8 +8,8 @@ for financial time series.
 📖 **Read the docs:** https://omargolcu.github.io/market-physics-docs/
 
 Status: work in progress — the library is under active development.
-Currently fully documented: `dynamics`, `gravity`, `fields` (26 of 110 indicators),
-plus the core contract and conventions. Remaining families are summarized and
-will be expanded as development stabilizes.
+All 12 families and 110 indicators are fully documented: physics essays, API reference,
+parameter tables, runnable examples, and charts computed on a shared reference dataset.
+A `control` family is in development and will be added when it stabilizes.
 
 All indicators are descriptive features, **not trading signals**.
