@@ -1300,7 +1300,7 @@ result.values.first_valid_index()  <span class="c"># 199 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — positive means more mass above price, negative means more mass below price, near zero is balanced</p>
+</svg><p class="caption"><b>Reading it</b> — positive means more mass above price, negative means more mass below price, near zero is balanced</p><p class="caption lim"><b>Limitation</b> — Descriptive volume-profile mass-split measure only. Depends on lookback and binning choices; no-usable-profile windows return NaN. Not a trading signal, not a support/resistance prediction, and not a physical gravity claim.</p>
 </article>
 <article class="indicator" id="gravity-gravity_levels">
 <h4><a href="#gravity-gravity_levels">gravity_levels</a></h4>
@@ -1436,7 +1436,7 @@ result.values.first_valid_index()  <span class="c"># 199 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — higher means mass concentrated in fewer price zones, lower means mass spread across price zones</p>
+</svg><p class="caption"><b>Reading it</b> — higher means mass concentrated in fewer price zones, lower means mass spread across price zones</p><p class="caption lim"><b>Limitation</b> — Descriptive Herfindahl-Hirschman-style concentration of the volume profile only. Depends on lookback and binning choices; no-usable-profile windows return NaN. Not a trading signal, not a support/resistance prediction, and not a physical gravity claim.</p>
 </article>
 <article class="indicator" id="gravity-orbital_deviation">
 <h4><a href="#gravity-orbital_deviation">orbital_deviation</a></h4>
@@ -1953,7 +1953,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — higher means the dominant cycle accounts for more of the recent oscillation, lower means oscillation is spread across cycles</p><p class="caption lim"><b>Related</b> — Magnitude-share sibling of resonance_score; both use the same dominant spectral bin and typically correlate highly, while cycle_amplitude uses magnitude share and resonance_score uses power share.</p>
+</svg><p class="caption"><b>Reading it</b> — higher means the dominant cycle accounts for more of the recent oscillation, lower means oscillation is spread across cycles</p><p class="caption lim"><b>Related</b> — Magnitude-share sibling of resonance_score; both use the same dominant spectral bin and typically correlate highly, while cycle_amplitude uses magnitude share and resonance_score uses power share.</p><p class="caption lim"><b>Limitation</b> — FFT resolution is limited by window length; periods are in bars, not clock time; assumes stationarity within the window; descriptive only</p>
 </article>
 <article class="indicator" id="waves-dominant_cycle_period">
 <h4><a href="#waves-dominant_cycle_period">dominant_cycle_period</a></h4>
@@ -1996,7 +1996,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — larger means the strongest recent oscillation is a longer (slower) cycle, smaller means a shorter (faster) cycle</p>
+</svg><p class="caption"><b>Reading it</b> — larger means the strongest recent oscillation is a longer (slower) cycle, smaller means a shorter (faster) cycle</p><p class="caption lim"><b>Limitation</b> — FFT resolution is limited by window length; periods are in bars, not clock time; assumes stationarity within the window; descriptive only and implies no prediction the cycle persists</p>
 </article>
 <article class="indicator" id="waves-frequency_pressure">
 <h4><a href="#waves-frequency_pressure">frequency_pressure</a></h4>
@@ -2040,7 +2040,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — higher normalised values mean more energy in faster oscillations, lower values mean more energy in slower oscillations</p>
+</svg><p class="caption"><b>Reading it</b> — higher normalised values mean more energy in faster oscillations, lower values mean more energy in slower oscillations</p><p class="caption lim"><b>Limitation</b> — FFT resolution is limited by window length; frequencies are in cycles per bar, not clock time; assumes stationarity within the window; descriptive only</p>
 </article>
 <article class="indicator" id="waves-phase_shift">
 <h4><a href="#waves-phase_shift">phase_shift</a></h4>
@@ -2171,7 +2171,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — higher means one allowed frequency explains a larger share of recent spectral power, lower means power is spread across frequencies</p><p class="caption lim"><b>Related</b> — Power-share sibling of cycle_amplitude; both use the same dominant spectral bin and typically correlate highly, while resonance_score uses power share and cycle_amplitude uses magnitude share.</p>
+</svg><p class="caption"><b>Reading it</b> — higher means one allowed frequency explains a larger share of recent spectral power, lower means power is spread across frequencies</p><p class="caption lim"><b>Related</b> — Power-share sibling of cycle_amplitude; both use the same dominant spectral bin and typically correlate highly, while resonance_score uses power share and cycle_amplitude uses magnitude share.</p><p class="caption lim"><b>Limitation</b> — FFT resolution is limited by window length; periods are in bars, not clock time; assumes stationarity within the window; descriptive only</p>
 </article>
 <article class="indicator" id="waves-spectral_entropy">
 <h4><a href="#waves-spectral_entropy">spectral_entropy</a></h4>
@@ -2216,7 +2216,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — low means the spectrum is concentrated in fewer frequencies, high means it is more dispersed / noisy</p>
+</svg><p class="caption"><b>Reading it</b> — low means the spectrum is concentrated in fewer frequencies, high means it is more dispersed / noisy</p><p class="caption lim"><b>Limitation</b> — FFT resolution is limited by window length; frequencies are per bar, not clock time; assumes stationarity within the window; descriptive only</p>
 </article>
 <article class="indicator" id="waves-wave_energy">
 <h4><a href="#waves-wave_energy">wave_energy</a></h4>
@@ -2261,7 +2261,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — higher means more oscillation energy (within the band, if given), lower means less oscillation energy</p>
+</svg><p class="caption"><b>Reading it</b> — higher means more oscillation energy (within the band, if given), lower means less oscillation energy</p><p class="caption lim"><b>Limitation</b> — FFT resolution is limited by window length; periods are in bars, not clock time; without a period band the value is raw energy and is not normalised; descriptive only</p>
 </article>
 </section><section class="chapter" id="turbulence">
 <div class="ch-head">
@@ -2889,7 +2889,7 @@ result.values.first_valid_index()  <span class="c"># 198 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Values near 1 indicate the motion largely cancelled out (dissipative); values near 0 indicate net directional movement dominated. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — the exact complement (1 - efficiency) of the internal thermal efficiency, not an independent quantity; shares its efficiency helper and is computed locally without importing other indicators. When volume_weighted=True and parameters are matched, this equals market_viscosity.</p>
+</svg><p class="caption"><b>Reading it</b> — Values near 1 indicate the motion largely cancelled out (dissipative); values near 0 indicate net directional movement dominated. Descriptive only.</p><p class="caption lim"><b>Related</b> — Equals 1 - thermodynamics.thermal_efficiency at matched parameters (complementary framing of the same net-vs-total movement component); when volume_weighted=True it also equals turbulence.market_viscosity at matched parameters.</p><p class="caption lim"><b>Limitation</b> — the exact complement (1 - efficiency) of the internal thermal efficiency, not an independent quantity; shares its efficiency helper and is computed locally without importing other indicators. When volume_weighted=True and parameters are matched, this equals market_viscosity.</p>
 </article>
 <article class="indicator" id="thermodynamics-heat_flow">
 <h4><a href="#thermodynamics-heat_flow">heat_flow</a></h4>
@@ -2929,7 +2929,7 @@ result.values.first_valid_index()  <span class="c"># 199 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — heat_flow is the change in an internal heat-like component (accumulated absolute motion). Positive values indicate the internal heat-like component is rising; negative values indicate it is falling. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — descriptive proxy for the change in an internal heat-like component; not physical heat transfer</p>
+</svg><p class="caption"><b>Reading it</b> — heat_flow is the change in an internal heat-like component (accumulated absolute motion). Positive values indicate the internal heat-like component is rising; negative values indicate it is falling. Descriptive only.</p><p class="caption lim"><b>Related</b> — Uses the same internal heat-like activity component as statistical.market_heat at matched parameters (window, return_method, volume_weighted; defaults differ in return_method); heat_flow measures the change in that component over flow_window.</p><p class="caption lim"><b>Limitation</b> — descriptive proxy for the change in an internal heat-like component; not physical heat transfer</p>
 </article>
 <article class="indicator" id="thermodynamics-thermal_efficiency">
 <h4><a href="#thermodynamics-thermal_efficiency">thermal_efficiency</a></h4>
@@ -2968,7 +2968,7 @@ result.values.first_valid_index()  <span class="c"># 198 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Values near 1 indicate net movement dominated the total absolute movement (directional/efficient); values near 0 indicate the motion largely cancelled out. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — descriptive efficiency proxy (window-normalised net-over-total movement); not a physical efficiency. When volume_weighted=True and parameters are matched, this equals abs(market_flow(normalize=True)) and 1 - market_viscosity; it is exposed here as a thermodynamic efficiency framing and computed locally without importing those indicators.</p>
+</svg><p class="caption"><b>Reading it</b> — Values near 1 indicate net movement dominated the total absolute movement (directional/efficient); values near 0 indicate the motion largely cancelled out. Descriptive only.</p><p class="caption lim"><b>Related</b> — When volume_weighted=True and parameters are matched, equals abs(turbulence.market_flow(normalize=True)) and abs(fields.market_charge normalized), and equals 1 - turbulence.market_viscosity; thermodynamics.heat_dissipation is its exact complement (1 - thermal_efficiency). Exposed here as a thermodynamic efficiency framing.</p><p class="caption lim"><b>Limitation</b> — descriptive efficiency proxy (window-normalised net-over-total movement); not a physical efficiency. When volume_weighted=True and parameters are matched, this equals abs(market_flow(normalize=True)) and 1 - market_viscosity; it is exposed here as a thermodynamic efficiency framing and computed locally without importing those indicators.</p>
 </article>
 <article class="indicator" id="thermodynamics-thermal_pressure">
 <h4><a href="#thermodynamics-thermal_pressure">thermal_pressure</a></h4>
@@ -3162,7 +3162,7 @@ result.values.first_valid_index()  <span class="c"># 98 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate more accumulated price motion over the window (a hotter, more active regime); lower values indicate a quiet, low-motion regime. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — Unbounded rolling accumulation of absolute motion; scale depends on window length and (when volume-weighted) participation. Descriptive accumulated-motion proxy only; not directional, not a prediction, and not a trading recommendation.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate more accumulated price motion over the window (a hotter, more active regime); lower values indicate a quiet, low-motion regime. Descriptive only.</p><p class="caption lim"><b>Related</b> — thermodynamics.heat_flow uses the same internal heat-like activity component at matched parameters (window, return_method, volume_weighted; defaults differ in return_method) and measures its change over a flow window.</p><p class="caption lim"><b>Limitation</b> — Unbounded rolling accumulation of absolute motion; scale depends on window length and (when volume-weighted) participation. Descriptive accumulated-motion proxy only; not directional, not a prediction, and not a trading recommendation.</p>
 </article>
 <article class="indicator" id="statistical-market_heat_capacity">
 <h4><a href="#statistical-market_heat_capacity">market_heat_capacity</a></h4>
@@ -4290,7 +4290,7 @@ result.values.first_valid_index()  <span class="c"># 199 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate a larger stochastic component around the local drift; lower values indicate returns dominated by drift. Descriptive proxy only.</p><p class="caption lim"><b>Limitation</b> — local residual-noise proxy measured around a rolling drift; the residual depends on that drift, so the warm-up spans about 2 * window bars. The unnormalized residual std is closely related to brownian_volatility. Descriptive only, not a signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate a larger stochastic component around the local drift; lower values indicate returns dominated by drift. Descriptive proxy only.</p><p class="caption lim"><b>Related</b> — Closely related to stochastic.brownian_volatility but not identical: noise_strength measures the rolling std of returns after removing a rolling drift, while brownian_volatility uses the raw returns.</p><p class="caption lim"><b>Limitation</b> — local residual-noise proxy measured around a rolling drift; the residual depends on that drift, so the warm-up spans about 2 * window bars. The unnormalized residual std is closely related to brownian_volatility. Descriptive only, not a signal.</p>
 </article>
 <article class="indicator" id="stochastic-random_walk_deviation">
 <h4><a href="#stochastic-random_walk_deviation">random_walk_deviation</a></h4>
@@ -5910,7 +5910,7 @@ result.values.first_valid_index()  <span class="c"># 99 — NaN during warm-up</
 <thead><tr><th>name</th><th>type</th><th>default</th><th>description</th></tr></thead>
 <tbody><tr><td><code>df</code></td><td><code>pd.DataFrame</code></td><td>—</td><td>OHLCV dataframe with a <code>close</code> column.</td></tr><tr><td><code>window</code></td><td><code>int</code></td><td><code>50</code></td><td>Lookback window for the baseline and standard deviation. Must be at least 2.</td></tr><tr><td><code>baseline</code> <span class="kw">kw-only</span></td><td><code>Literal['rolling_mean', 'rolling_median']</code></td><td><code>'rolling_mean'</code></td><td><code>"rolling_mean"</code> or <code>"rolling_median"</code> local baseline.</td></tr><tr><td><code>normalize</code> <span class="kw">kw-only</span></td><td><code>bool</code></td><td><code>True</code></td><td>If True, divide the raw error by the rolling std of close.</td></tr></tbody></table></div>
 <h5>Returns</h5>
-<p class="returns">An IndicatorResult aligned to <code>df</code> index, with <code>NaN</code> during the warm-up period and wherever the estimate is undefined (e.g. a zero rolling standard deviation).</p>
+<p class="returns">An IndicatorResult aligned to <code>df</code> index, with <code>NaN</code> during the warm-up period and wherever the estimate is undefined (e.g. a zero rolling standard deviation; when <code>normalize</code> is set, a window of identical closes always reads <code>NaN</code> -- the zero detection is exact, so the same bar reads identically in a full-history pass and a tail pass).</p>
 <h5>Raises</h5><div class="tbl"><table><tbody><tr><td><code>ValueError</code></td><td>If <code>window</code> is less than 2 or <code>baseline</code> is invalid.</td></tr><tr><td><code>MissingColumnError</code></td><td>If <code>close</code> is missing.</td></tr><tr><td><code>InsufficientDataError</code></td><td>If <code>df</code> has fewer than <code>window</code> rows.</td></tr></tbody></table></div>
 <h5>Example</h5>
 <pre><code><span class="c"># df: OHLCV dataframe (open, high, low, close, volume)</span>
@@ -6437,7 +6437,7 @@ result.values.first_valid_index()  <span class="c"># 99 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate faster metaphorical market-time (elevated volatility relative to its recent norm); lower values indicate slower market-time. Descriptive only.</p><p class="caption lim"><b>Related</b> — Raw mode equals stochastic.brownian_volatility(annualize=False) at matched parameters; normalized mode expresses that rolling volatility relative to its own rolling mean as a metaphorical market-time rate.</p><p class="caption lim"><b>Limitation</b> — Metaphorical volatility-adjusted market-time proxy; not physical relativistic time dilation.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate faster metaphorical market-time (elevated volatility relative to its recent norm); lower values indicate slower market-time. Descriptive only.</p><p class="caption lim"><b>Related</b> — Raw mode equals stochastic.brownian_volatility(annualize=False) at matched parameters (both snap exactly-constant return windows to an exact 0.0 volatility); normalized mode expresses that rolling volatility relative to its own rolling mean as a metaphorical market-time rate.</p><p class="caption lim"><b>Limitation</b> — Metaphorical volatility-adjusted market-time proxy; not physical relativistic time dilation.</p>
 </article>
 </section><section class="chapter" id="experimental">
 <div class="ch-head">
@@ -6518,7 +6518,7 @@ result.values.first_valid_index()  <span class="c"># 159 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate the dominant cycle stayed near the reference period more often within the smoothing window; lower values indicate it did not. Descriptive only.</p><p class="caption lim"><b>Related</b> — Thresholded and smoothed dominant-cycle-distance feature.</p><p class="caption lim"><b>Limitation</b> — Descriptive smoothed cycle-locking condition; not proof of resonance and not predictive. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate the dominant cycle stayed near the reference period more often within the smoothing window; lower values indicate it did not. Descriptive only.</p><p class="caption lim"><b>Related</b> — Thresholded and smoothed dominant-cycle-distance feature. Shares the same local dominant-cycle reference-distance component with resonance_deviation; fixed_cycle_resonance_proxy shares only the local FFT spectrum core and uses the bin nearest the reference period instead of the dominant cycle.</p><p class="caption lim"><b>Limitation</b> — Descriptive smoothed cycle-locking condition; not proof of resonance and not predictive. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
 </article>
 <article class="indicator" id="experimental-experimental_pressure">
 <h4><a href="#experimental-experimental_pressure">experimental_pressure</a></h4>
@@ -6635,7 +6635,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate more spectral power concentrated in a bin close to the reference period; lower values indicate diffuse power or a distant nearest bin. Descriptive only.</p><p class="caption lim"><b>Limitation</b> — Fixed-reference cycle-distance proxy; does not use Schumann resonance data, does not imply Earth-frequency market resonance, and treats reference_period as bars, not Hz. Schumann-specific interpretation is intentionally avoided. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate more spectral power concentrated in a bin close to the reference period; lower values indicate diffuse power or a distant nearest bin. Descriptive only.</p><p class="caption lim"><b>Related</b> — Shares the same local FFT spectrum core (window_spectrum) with resonance_deviation and cycle_locking_score, but unlike them its distance term uses the FFT bin nearest the reference period (parameter-determined), not the data-dependent dominant-cycle period, exposing a fixed-reference framing.</p><p class="caption lim"><b>Limitation</b> — Fixed-reference cycle-distance proxy; does not use Schumann resonance data, does not imply Earth-frequency market resonance, and treats reference_period as bars, not Hz. Schumann-specific interpretation is intentionally avoided. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
 </article>
 <article class="indicator" id="experimental-observer_sensitivity">
 <h4><a href="#experimental-observer_sensitivity">observer_sensitivity</a></h4>
@@ -6716,7 +6716,7 @@ result.values.first_valid_index()  <span class="c"># 128 — NaN during warm-up<
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption"><b>Reading it</b> — Higher values indicate the dominant cycle period is further from the reference period; values near 0 indicate it is close to the reference. Descriptive only.</p><p class="caption lim"><b>Related</b> — Derived from a local dominant-cycle-period calculation similar in concept to waves.dominant_cycle_period, but expressed as distance from a chosen reference period.</p><p class="caption lim"><b>Limitation</b> — Resonance-inspired cycle-distance proxy; not evidence of physical resonance. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
+</svg><p class="caption"><b>Reading it</b> — Higher values indicate the dominant cycle period is further from the reference period; values near 0 indicate it is close to the reference. Descriptive only.</p><p class="caption lim"><b>Related</b> — Derived from a local dominant-cycle-period calculation similar in concept to waves.dominant_cycle_period, but expressed as distance from a chosen reference period. Shares the same local dominant-cycle reference-distance component with cycle_locking_score; fixed_cycle_resonance_proxy shares only the local FFT spectrum core and uses the bin nearest the reference period instead of the dominant cycle.</p><p class="caption lim"><b>Limitation</b> — Resonance-inspired cycle-distance proxy; not evidence of physical resonance. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
 </article>
 <article class="indicator" id="experimental-state_superposition_score">
 <h4><a href="#experimental-state_superposition_score">state_superposition_score</a></h4>
@@ -6836,7 +6836,7 @@ result.values.first_valid_index()  <span class="c"># 99 — NaN during warm-up</
 <line x1="8" y1="188" x2="628" y2="188" class="axis"/>
 <text x="8" y="200" class="alab">bar 0</text>
 <text x="628" y="200" class="alab" text-anchor="end">bar 1200</text>
-</svg><p class="caption lim"><b>Related</b> — Raw mode equals stochastic.brownian_volatility(annualize=False) at matched parameters; normalized mode is conceptually close to geometry.volatility_time_dilation.</p><p class="caption lim"><b>Limitation</b> — Experimental volatility-based uncertainty proxy; not quantum uncertainty or a predictive interval. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
+</svg><p class="caption"><b>Reading it</b> — higher means recent returns are more dispersed (a wider uncertainty band), lower means returns are more settled; in normalized mode the value is relative to its own recent norm</p><p class="caption lim"><b>Related</b> — Raw mode equals stochastic.brownian_volatility(annualize=False) at matched parameters; normalized mode is conceptually close to geometry.volatility_time_dilation.</p><p class="caption lim"><b>Limitation</b> — Experimental volatility-based uncertainty proxy; not quantum uncertainty or a predictive interval. Experimental metaphorical proxy; not a physical quantum, Schumann, or resonance model, and not a trading signal.</p>
 </article>
 </section><section class="chapter" id="microstructure">
 <div class="ch-head">
